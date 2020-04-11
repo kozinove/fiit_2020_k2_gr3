@@ -1,1 +1,0 @@
-create_project_lib(stack_lib)
