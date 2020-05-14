@@ -22,10 +22,15 @@ public:
 
 	TreeNode<TData>* GetLeft()const;
 	TreeNode<TData>* GetRight()const;
+	TreeNode<TData>* GetParent()const;
+	TData* GetData()const { return pData; };
 	int GetKey()const { return key; };
 
 	void SetLeft(TreeNode<TData>* _pLeft) { pLeft = _pLeft; };
 	void SetRight(TreeNode<TData>* _pRight) { pRight = _pRight; };
+	void SetParent(TreeNode<TData>* _pParent) { pParent= _pParent; };
+	void SetKey(int _key) { key = _key; };
+	void SetData(TData* _pData) { pData = _pData; };
 
 	friend ostream& operator <<(ostream& out, const TreeNode& T)
 	{
@@ -65,6 +70,12 @@ template <class TData>
 TreeNode<TData>* TreeNode<TData>::GetRight()const
 {
 	return pRight;
+}
+
+template <class TData>
+TreeNode<TData>* TreeNode<TData>::GetParent()const
+{
+	return pParent;
 }
 
 #endif

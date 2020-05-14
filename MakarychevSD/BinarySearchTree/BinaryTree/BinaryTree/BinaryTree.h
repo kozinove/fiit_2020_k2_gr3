@@ -1,6 +1,7 @@
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 #include "TreeNode.h"
+#include <queue>
 
 template <class TData>
 class BinaryTree
@@ -18,18 +19,34 @@ public:
 	void Insert(TreeNode<TData>** root, TreeNode<TData>* node);
 	void Remove(TreeNode<TData>* node);
 
+	friend ostream& operator <<(ostream& out, const BinaryTree& B)
+	{
+		queue< TreeNode<TData>*> q;
+		q.push(B.root);
+		while (!q.empty())
+		{
+			TreeNode<TData>* tmp = q.front();
+			out << *tmp;
+			q.pop();
+			if (tmp->GetLeft() != nullptr)
+				q.push(tmp->GetLeft());
+			if (tmp->GetRight() != nullptr)
+				q.push(tmp->GetRight());
+		}
+		return out;
+	};
 };
 
 template <class TData>
 TreeNode<TData>* BinaryTree<TData>:: Search(TreeNode<TData>* root, int key)
 {
 	TreeNode<TData>* curr = root;
-	while (curr != nullptr && curr->key != key)
+	while (curr != nullptr && curr->GetKey() != key)
 	{
-		if (key < curr->key) 
-			curr = curr->pLeft;
+		if (key < curr->GetKey()) 
+			curr = curr->GetLeft();
 		else 
-			curr = curr->pRight;
+			curr = curr->GetRight();
 	}
 	return curr;
 }
@@ -38,9 +55,9 @@ template <class TData>
 TreeNode<TData>* BinaryTree<TData>::SearchMax(TreeNode<TData>* root)
 {
 	TreeNode<TData>* curr = root;
-	while (curr->pRight != nullptr)
+	while (curr->GetRight() != nullptr)
 	{
-		curr = curr->pRight;
+		curr = curr->GetRight();
 	}
 	return curr;
 }
@@ -49,9 +66,9 @@ template <class TData>
 TreeNode<TData>* BinaryTree<TData>::SearchMin(TreeNode<TData>* root)
 {
 	TreeNode<TData>* curr = root;
-	while (curr->pLeft != nullptr)
+	while (curr->GetLeft() != nullptr)
 	{
-		curr = curr->pLeft;
+		curr = curr->GetLeft();
 	}
 	return curr;
 }
@@ -60,19 +77,19 @@ template <class TData>
 TreeNode<TData>* BinaryTree<TData>::SearchNext(TreeNode<TData>* curr)
 {
 	TreeNode<TData>* res = nullptr;
-	if (curr->right != nullptr)
+	if (curr->GetRight() != nullptr)
 	{
 
 		res = SearchMin(curr);
 
 		return res;
 	}
-	res = curr->pParent;
+	res = curr->GetParent();
 	TreeNode<TData>* tmp = curr;
-	while (res != nullptr && tmp == res->pRight)
+	while (res != nullptr && tmp == res->GetRight())
 	{
 		tmp = res;
-		res = res->pParent;
+		res = res->GetParent();
 	}
 	return res;
 }
@@ -81,18 +98,18 @@ template <class TData>
 TreeNode<TData>* BinaryTree<TData>::SearchPrev(TreeNode<TData>* curr)
 {
 	TreeNode<TData>* res = nullptr;
-	if (curr->pLeft != nullptr)
+	if (curr->GetLeft() != nullptr)
 	{
 		res = SearchMax(curr);
 
 		return res;
 	}
-	res = curr->pParent;
+	res = curr->GetParent();
 	TreeNode<TData>* tmp = curr;
-	while (res != nullptr && tmp == res->pLeft)
+	while (res != nullptr && tmp == res->GetLeft())
 	{
 		tmp = res;
-		res = res->pParent;
+		res = res->GetParent();
 	}
 	return res;
 }
@@ -109,23 +126,23 @@ void  BinaryTree<TData>::Insert(TreeNode<TData>** root, TreeNode<TData>* node)
 	while (x != nullptr)
 	{
 		y = x;
-		if (node->key < x->key) 
-			x = x->pLeft;
+		if (node->GetKey() < x->key) 
+			x = x->GetLeft();
 		else 
-			x = x->pRight;
+			x = x->GetRight();
 	}
-	node->pParent = y;
+	node->SetParent(y);
 	if (node->key < y->key) 
-		y->pLeft = node;
+		y->SetLeft(node);
 	else 
-		y->pRight = node;
+		y->SetRight(node);
 }
 
 template <class TData>
 void BinaryTree<TData>::Remove(TreeNode<TData>* z)
 {
 	TreeNode<TData>* y = nullptr, * x = nullptr;
-	if (z->pLeft != nullptr && z->pRight != nullptr)
+	if (z->GetLeft() != nullptr && z->GetRight() != nullptr)
 	{
 		y = SearchNext(z); 
 	}
@@ -133,28 +150,28 @@ void BinaryTree<TData>::Remove(TreeNode<TData>* z)
 	{
 		y = z; 
 	}
-	if (y->pleft != nullptr)
+	if (y->GetLeft() != nullptr)
 	{
-		x = y->pLeft;
+		x = y->GetLeft();
 	}
 	else
 	{
-		x = y->pRight;
+		x = y->GetRight();
 	}
 	if (x != nullptr)
-		x->pParent = y->pParent;
-	if (y->parent != nullptr)
+		x->SetParent(y->GetParent());
+	if (y->GetParent() != nullptr)
 	{
-		if (y == y->pParent->pLeft) 
-			y->pParent->pLeft = x;
+		if (y == y->GetParent()->GetLeft())
+			y->GetParent()->SetLeft(x);
 		else 
-			y->pParent->pRight = x;
+			y->GetParent()->SetRight(x);
 	}
 	if (y != z)
 	{
-		z->key = y->key;
-		delete z->dpDta;
-		z->pData = y->pData;
+		z->SetKey(y->GetKey());
+		delete z->GetData();
+		z->SetData(y->GetData());
 	}
 }
 #endif

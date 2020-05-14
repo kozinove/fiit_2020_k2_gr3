@@ -13,14 +13,16 @@ int main()
 	TreeNode<float>* T5 = new TreeNode<float>(6, nullptr, nullptr, nullptr, T2);
 	TreeNode<float>* T6 = new TreeNode<float>(7, nullptr, nullptr, nullptr, T2);
 	root->SetLeft(T1);
-	root->SetRight(T1);
+	root->SetRight(T2);
 	T1->SetLeft(T3);
 	T1->SetRight(T4);
 	T2->SetLeft(T5);
 	T2->SetRight(T6);
 	BinaryTree<float> B(root);
-	cout << *T1;
-
+	cout << *T1 << endl;
+	cout << B <<endl;
+	B.Remove(T5);
+	cout << B;
 
 	return 0;
 }
