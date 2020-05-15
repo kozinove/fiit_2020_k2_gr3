@@ -11,12 +11,12 @@ private:
 public:
 	BinaryTree(TreeNode<TData>* _root = nullptr) : root(_root) {};
 
-	TreeNode<TData>* Search(TreeNode<TData>* root, int key);
-	TreeNode<TData>* SearchMax(TreeNode<TData>* root);
-	TreeNode<TData>* SearchMin(TreeNode<TData>* root);
+	TreeNode<TData>* Search(int key);
+	TreeNode<TData>* SearchMax();
+	TreeNode<TData>* SearchMin();
 	TreeNode<TData>* SearchNext(TreeNode<TData>* curr);
 	TreeNode<TData>* SearchPrev(TreeNode<TData>* curr);
-	void Insert(TreeNode<TData>** root, TreeNode<TData>* node);
+	void Insert(TreeNode<TData>* node);
 	void Remove(TreeNode<TData>* node);
 
 	friend ostream& operator <<(ostream& out, const BinaryTree& B)
@@ -38,9 +38,9 @@ public:
 };
 
 template <class TData>
-TreeNode<TData>* BinaryTree<TData>:: Search(TreeNode<TData>* root, int key)
+TreeNode<TData>* BinaryTree<TData>:: Search(int key)
 {
-	TreeNode<TData>* curr = root;
+	TreeNode<TData>* curr = this->root;
 	while (curr != nullptr && curr->GetKey() != key)
 	{
 		if (key < curr->GetKey()) 
@@ -52,9 +52,9 @@ TreeNode<TData>* BinaryTree<TData>:: Search(TreeNode<TData>* root, int key)
 }
 
 template <class TData>
-TreeNode<TData>* BinaryTree<TData>::SearchMax(TreeNode<TData>* root)
+TreeNode<TData>* BinaryTree<TData>::SearchMax()
 {
-	TreeNode<TData>* curr = root;
+	TreeNode<TData>* curr = this->root;
 	while (curr->GetRight() != nullptr)
 	{
 		curr = curr->GetRight();
@@ -63,9 +63,9 @@ TreeNode<TData>* BinaryTree<TData>::SearchMax(TreeNode<TData>* root)
 }
 
 template <class TData>
-TreeNode<TData>* BinaryTree<TData>::SearchMin(TreeNode<TData>* root)
+TreeNode<TData>* BinaryTree<TData>::SearchMin()
 {
-	TreeNode<TData>* curr = root;
+	TreeNode<TData>* curr = this->root;
 	while (curr->GetLeft() != nullptr)
 	{
 		curr = curr->GetLeft();
@@ -80,7 +80,7 @@ TreeNode<TData>* BinaryTree<TData>::SearchNext(TreeNode<TData>* curr)
 	if (curr->GetRight() != nullptr)
 	{
 
-		res = SearchMin(curr);
+		res = SearchMin();
 
 		return res;
 	}
@@ -100,7 +100,7 @@ TreeNode<TData>* BinaryTree<TData>::SearchPrev(TreeNode<TData>* curr)
 	TreeNode<TData>* res = nullptr;
 	if (curr->GetLeft() != nullptr)
 	{
-		res = SearchMax(curr);
+		res = SearchMax();
 
 		return res;
 	}
@@ -115,24 +115,24 @@ TreeNode<TData>* BinaryTree<TData>::SearchPrev(TreeNode<TData>* curr)
 }
 
 template <class TData>
-void  BinaryTree<TData>::Insert(TreeNode<TData>** root, TreeNode<TData>* node)
+void  BinaryTree<TData>::Insert(TreeNode<TData>* node)
 {
-	if (*root == nullptr)
+	if (this->root == nullptr)
 	{
-		*root = node;
+		root = node;
 		return;
 	}
-	TreeNode<TData>* x = *root, * y;
+	TreeNode<TData>* x = this->root, * y = x;
 	while (x != nullptr)
 	{
 		y = x;
-		if (node->GetKey() < x->key) 
+		if (node->GetKey() < x->GetKey())
 			x = x->GetLeft();
 		else 
 			x = x->GetRight();
 	}
 	node->SetParent(y);
-	if (node->key < y->key) 
+	if (node->GetKey() < y->GetKey())
 		y->SetLeft(node);
 	else 
 		y->SetRight(node);
