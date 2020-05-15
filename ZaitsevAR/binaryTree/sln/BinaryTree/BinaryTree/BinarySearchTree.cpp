@@ -1,25 +1,7 @@
 #include "BinarySearchTree.h"
 
-Node::Node()
-{
-	left = nullptr;
-	right = nullptr;
-	parent = nullptr;
-}
 
-Node::Node(int key_)
-{
-	key = key_;
-	left = right = parent = nullptr;
-}
-
-Node::~Node()
-{
-	left = nullptr;
-	right = nullptr;
-}
-
-Node* Node::searchMin(Node* root)
+Node* BinaryTree::searchMin(Node* root)
 {
 	Node* curr = root;
 	while (curr->left != nullptr)
@@ -27,7 +9,7 @@ Node* Node::searchMin(Node* root)
 	return curr;
 }
 
-Node* Node::searchNext(Node* curr)
+Node* BinaryTree::searchNext(Node* curr)
 {
 	// следующим ключом будет минимальный в правой ветке
 	Node* res = nullptr;
@@ -48,7 +30,7 @@ Node* Node::searchNext(Node* curr)
 	return res;
 }
 
-Node* Node::searchNode(Node* root, int key_)
+Node* BinaryTree::searchNode(Node* root, int key_)
 {
 	if (root == nullptr)
 		return NULL;
@@ -60,7 +42,7 @@ Node* Node::searchNode(Node* root, int key_)
 		return searchNode(root->right, key_);
 }
 
-void Node::insertNode(Node* root, Node* node)
+void BinaryTree::insertNode(Node* root, Node* node)
 {
 	if (root == nullptr)
 	{
@@ -99,7 +81,7 @@ void Node::insertNode(Node* root, Node* node)
 	}
 }
 
-void Node::removeNode(Node* z)
+void BinaryTree::removeNode(Node* z)
 {
 	// 1) в случае, если удаляемый узел это лист
 	if (z->left == nullptr && z->right == nullptr)
@@ -148,20 +130,22 @@ void Node::removeNode(Node* z)
 	}
 }
 
-void Node::print(const Node* root) // симметричный обход
+Node* BinaryTree::getRoot() const { return root; }
+
+void BinaryTree::print(const Node* root) // симметричный обход
 {
 	if (root != nullptr)
 	{
 		print(root->left);
-		cout << " " << root->key << "\t";
+		cout << *root;
 		print(root->right);
 	}
 }
 
-ostream& operator<<(ostream& out, const Node& root)
+ostream& operator<<(ostream& out, const BinaryTree& tree)
 {
-	if (&root != nullptr)
-		Node::print(&root);
+	if (tree.root != nullptr)
+		BinaryTree::print(tree.root);
 
 	return out;
 }

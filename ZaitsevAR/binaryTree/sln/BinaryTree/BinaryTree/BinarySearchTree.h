@@ -1,19 +1,15 @@
 #pragma once
+#include "Node.h"
 #include <iostream>
-#include <time.h>
 
 using namespace std;
 
-struct Node
+class BinaryTree
 {
-	int key;
-	Node* left;
-	Node* right;
-	Node* parent;
-
-	Node();
-	Node(int key_); // создадим дерево из "n" рандомных элементов
-	~Node();
+private:
+	Node* root;
+public:
+	BinaryTree(Node* root_ = nullptr) : root(root_) {};
 
 	Node* searchMin(Node* root); // поиск минимального элемента
 	Node* searchNext(Node* curr); // поиск следующего элемента
@@ -22,6 +18,8 @@ struct Node
 	static void insertNode(Node* root, Node* node);
 	void removeNode(Node* z);
 
+	Node* getRoot() const;
+
 	static void print(const Node* root);
-	friend ostream& operator<<(ostream& out, const Node& root);
+	friend ostream& operator<<(ostream& out, const BinaryTree& tree);
 };
