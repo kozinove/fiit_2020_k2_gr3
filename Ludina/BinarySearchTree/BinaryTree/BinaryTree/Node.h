@@ -5,22 +5,30 @@ using namespace std;
 
 class Node
 {
-public:
+private:
 	int key;
 	Node* parent;
 	Node* Left;
 	Node* Right;
-
+public:
 	Node();
 	Node(int _key);
+	Node(const Node& copy);
 	~Node();
 
-	void remove(Node* z);//удаление вершины
-	Node* SearchNext(Node* curr);
-	Node* SearchMin(Node* root);
-	static Node* Search(Node* root, int _key);
-	static void insert(Node* root, Node* node);
+	Node* getLeft() const;
+	Node* getRight() const;
+	Node* getParent() const;
+	int getkey() const;
 
-	static void print(const Node* root);
-	friend ostream& operator<<(ostream& out, const Node& root);
+	void setLeft(Node* left);
+	void setRight(Node* right);
+	void setParent(Node* _parent);
+	void setkey(int _key);
+
+	friend ostream& operator<<(ostream& out, const Node& root)
+	{
+		out << " " << root.key;
+		return out;
+	}
 };
