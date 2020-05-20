@@ -12,13 +12,13 @@ int main()
 	{
 		int number = rand() % 100;
 		Node node(number);
-		BinaryTree::insert(tree.getRoot(), &node);
+		tree.insert(&node);
 	}
 	cout << "Keys of tree: " << tree << endl;
 	int n;
 	cout << "Select the number to delete the node: ";
 	cin >> n;
-	tree.remove(BinaryTree::Search(tree.getRoot(), n));
+	tree.remove(tree.Search(n));
 	cout << "Keys of tree: " << tree << endl;
 
 	system("pause");

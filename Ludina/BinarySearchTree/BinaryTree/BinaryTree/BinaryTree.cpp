@@ -1,20 +1,21 @@
 #include "BinaryTree.h"
 
-Node* BinaryTree::Search(Node* root, int _key)
+Node* BinaryTree::Search(int _key)
 {
-	if (root == nullptr)
-		return NULL;
-	if (root->getkey() == _key)
-		return root;
-	if (_key < root->getkey())
-		return Search(root->getLeft(), _key);
-	else
-		return Search(root->getRight(), _key);
+	Node* curr = this->root;
+	while (curr != nullptr && curr->getkey() != _key)
+	{
+		if (_key < curr->getkey())
+			curr = curr->getLeft();
+		else
+			curr = curr->getRight();
+	}
+	return curr;
 }
 
-Node* BinaryTree::SearchMin(Node* root)
+Node* BinaryTree::SearchMin()
 {
-	Node* curr = root;
+	Node* curr = this->root;
 	while (curr->getLeft() != nullptr)
 		curr = curr->getLeft();
 	return curr;
@@ -25,7 +26,7 @@ Node* BinaryTree::SearchNext(Node* curr)
 	Node* res = nullptr;
 	if (curr->getRight() != nullptr)
 	{
-		res = SearchMin(curr->getRight());
+		res = SearchMin();
 		return res;
 	}
 	res = curr->getParent();
@@ -38,14 +39,14 @@ Node* BinaryTree::SearchNext(Node* curr)
 	return res;
 }
 
-void BinaryTree::insert(Node* root, Node* node)
+void BinaryTree::insert(Node* node)
 {
-	if (root == nullptr)
+	if (this->root == nullptr)
 	{
 		root = node;
 		return;
 	}
-	Node* x = root;
+	Node* x = this->root;
 	Node* y = x;
 	while (x != nullptr)
 	{
