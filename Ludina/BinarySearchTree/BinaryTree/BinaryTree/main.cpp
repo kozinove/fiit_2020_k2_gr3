@@ -18,8 +18,10 @@ int main()
 	int n;
 	cout << "Select the number to delete the node: ";
 	cin >> n;
+	cout << "Next node: ";
+	cout << *(tree.SearchNext(tree.Search(n))) << endl;
 	tree.remove(tree.Search(n));
-	cout << "Keys of tree: " << tree << endl;
+	cout << "Keys of tree after deleting: " << tree << endl;
 
 	system("pause");
 	return 0;

@@ -5,6 +5,7 @@ class BinaryTree
 {
 private:
 	Node* root;
+	Node* Min(Node* root);
 public:
 	BinaryTree(Node* _root = nullptr) : root(_root) {};
 

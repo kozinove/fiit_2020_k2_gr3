@@ -1,5 +1,13 @@
 #include "BinaryTree.h"
 
+Node* BinaryTree::Min(Node* root)
+{
+	Node* curr = root;
+	while (curr->getLeft() != nullptr)
+		curr = curr->getLeft();
+	return curr;
+}
+
 Node* BinaryTree::Search(int _key)
 {
 	Node* curr = this->root;
@@ -26,7 +34,7 @@ Node* BinaryTree::SearchNext(Node* curr)
 	Node* res = nullptr;
 	if (curr->getRight() != nullptr)
 	{
-		res = SearchMin();
+		res = Min(curr->getRight());
 		return res;
 	}
 	res = curr->getParent();
