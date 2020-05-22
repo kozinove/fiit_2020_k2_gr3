@@ -1,1 +1,0 @@
-create_project_lib(binary_tree_lib)
