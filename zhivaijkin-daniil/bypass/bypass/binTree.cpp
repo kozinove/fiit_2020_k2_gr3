@@ -51,12 +51,13 @@ void BinTree::it1()
 		Node* tmp = s.top();
 		s.pop();
 		cout << *tmp << " ";
-		if (tmp->right != nullptr)
-			s.push(tmp->right);
-		if (tmp->left != nullptr)
-			s.push(tmp->left);
+		if (tmp->gright() != nullptr)
+			s.push(tmp->gright());
+		if (tmp->gleft() != nullptr)
+			s.push(tmp->gleft());
 	}
-
+}
+	Node* BinTree::getRoot() const { return root; }
 
 /*Node* BinTree::search() {
 	if (root == nullptr) throw std::exception("Tree is empty");

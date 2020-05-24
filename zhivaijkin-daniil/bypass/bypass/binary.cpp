@@ -13,15 +13,16 @@ Node::Node(const Node& cpy)
 	right = cpy.right;
 	data = cpy.data;
 }
-Node::~Node()
-{
+
+Node::Node(int _key) {
+	key = _key;
 	left = nullptr;
 	right = nullptr;
 	data = nullptr;
 }
 
-Node::Node(int _key) {
-	key = _key;
+Node::~Node()
+{
 	left = nullptr;
 	right = nullptr;
 	data = nullptr;
