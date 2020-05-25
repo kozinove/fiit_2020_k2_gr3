@@ -1,4 +1,5 @@
 #include "BinarySearchTree.h"
+#include "Iterator.h"
 #include <time.h>
 
 int main()
@@ -24,6 +25,13 @@ int main()
 	tree.print_reverse_order();
 	cout << " Bypass in width" << endl;
 	tree.print_in_width();
+
+	cout << "\n Iterator: bypass in direct order" << endl;
+	Iterator i(&node);
+	while (i.hasNext())
+		cout << " " << i.next() << "\t";
+
+	cout << endl;
 
 	system("pause");
 	return 0;

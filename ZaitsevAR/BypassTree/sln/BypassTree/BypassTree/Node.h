@@ -15,6 +15,7 @@ struct Node
 	Node(const Node& node);
 	~Node();
 
+	int getKey() const;
 	Node* getLeft() const;
 	Node* getRight() const;
 	Node* getParent() const;

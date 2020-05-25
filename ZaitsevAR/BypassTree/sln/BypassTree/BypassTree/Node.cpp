@@ -1,5 +1,6 @@
 #include "Node.h"
 
+int Node::getKey() const { return key; }
 Node* Node::getLeft() const { return left; }
 Node* Node::getRight() const { return right; }
 Node* Node::getParent() const { return parent; }

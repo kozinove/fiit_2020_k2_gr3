@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BinarySearchTree.h" />
+    <ClInclude Include="Iterator.h" />
     <ClInclude Include="Node.h" />
   </ItemGroup>
   <ItemGroup>
