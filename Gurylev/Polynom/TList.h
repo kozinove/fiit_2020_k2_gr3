@@ -132,23 +132,15 @@ void TList<TKey, TData>::InsertEnd(TKey key, TData data)
 	if (pFirst == NULL)
 	{
 		InsertBegin(key, data);
-		Reset();
 		return;
 	}
-	TNode<TKey, TData>* prev = pPrevious;
-	TNode<TKey, TData>* next = pNext;
-	TNode<TKey, TData>* curr = pCurrent;
-	Reset();
-	while (!IsEnded())
-		Next();
-	pCurrent = new TNode<TKey, TData>(key, data);
-	pPrevious->pNext = pCurrent;
-	if (curr == pPrevious)
-		pNext = pCurrent;
-	else
-		pNext = next;
-	pCurrent = curr;
-	pPrevious = prev;
+	TNode<TKey, TData>* new_node = new TNode<TKey, TData>(key, data);
+	TNode<TKey, TData>* tmp = pFirst;
+	while (tmp->pNext != NULL)
+		tmp = tmp->pNext;
+	tmp->pNext = new_node;
+	if (pCurrent == tmp)
+		pNext = new_node;
 }
 
 template<typename TKey, typename TData>
