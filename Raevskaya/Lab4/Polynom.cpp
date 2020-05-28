@@ -116,41 +116,25 @@ Polynom& Polynom::operator*=(const Monom& _monom) {
 	return *this;
 }
 
-Polynom Polynom::operator+(const Polynom& _polynom) {
+Polynom Polynom::operator+(const Monom& _monom) {
 	Polynom result;
 	monoms->Reset();
-	_polynom.monoms->Reset();
-	while (!monoms->IsEnded() && !_polynom.monoms->IsEnded()) {
-		if (*monoms->ReturnCurrent() < *_polynom.monoms->ReturnCurrent()) {
-			result.monoms->Back(monoms->ReturnCurrent()->key, monoms->ReturnCurrent()->pData);
-			result.monoms->Reset();
-			monoms->Next();
-		}
-		else if (*monoms->ReturnCurrent() > * _polynom.monoms->ReturnCurrent()) {
-			result.monoms->Back(_polynom.monoms->ReturnCurrent()->key, _polynom.monoms->ReturnCurrent()->pData);
-			result.monoms->Reset();
-			_polynom.monoms->Next();
-		}
-		else if (*monoms->ReturnCurrent() == *_polynom.monoms->ReturnCurrent()) {
-			if (monoms->ReturnCurrent()->pData + _polynom.monoms->ReturnCurrent()->pData != 0.0) {
-				result.monoms->Back(monoms->ReturnCurrent()->key, (monoms->ReturnCurrent()->pData + _polynom.monoms->ReturnCurrent()->pData));
-				result.monoms->Reset();
-			}
-			monoms->Next();
-			_polynom.monoms->Next();
-		}
+	while (!monoms->IsEnded() && *monoms->ReturnCurrent() < _monom) {
+		result.monoms->Back(monoms->ReturnCurrent()->key, monoms->ReturnCurrent()->pData);
+		monoms->Next();
 	}
+	if (!monoms->IsEnded() && *monoms->ReturnCurrent() == _monom) {
+		Monom tmp = *monoms->ReturnCurrent() + _monom;
+		result.monoms->Back(tmp.key, tmp.pData);
+	}
+	result.monoms->Back(_monom.key, _monom.pData);
 	while (!monoms->IsEnded()) {
 		result.monoms->Back(monoms->ReturnCurrent()->key, monoms->ReturnCurrent()->pData);
 		monoms->Next();
 	}
-	while (!_polynom.monoms->IsEnded()) {
-		result.monoms->Back(_polynom.monoms->ReturnCurrent()->key, _polynom.monoms->ReturnCurrent()->pData);
-		_polynom.monoms->Next();
-	}
-	result.monoms->Reset();
 	return result;
 }
+
 
 Polynom Polynom::operator-(const Polynom& _polynom) {
 	return *this + (-_polynom);
