@@ -9,6 +9,7 @@ class TList
 {
 protected:
     TNode<TKey, TData>* pFirst;
+    TNode<TKey, TData>* pLast;
     TNode<TKey, TData>* pPrevious;
     TNode<TKey, TData>* pNext;
     TNode<TKey, TData>* pCurrent;
@@ -48,6 +49,7 @@ template <typename TKey, typename TData>
 TList<TKey, TData>::TList()
 {
     pFirst = nullptr;
+    pLast = nullptr;
     pPrevious = nullptr;
     pNext = nullptr;
     pCurrent = nullptr;
@@ -59,6 +61,7 @@ TList<TKey, TData>::TList(const TList& temp)
     if (temp.pFirst == nullptr)
     {
         pFirst = nullptr;
+        pLast = nullptr;
         pPrevious = nullptr;
         pNext = nullptr;
         pCurrent = nullptr;
@@ -72,6 +75,7 @@ TList<TKey, TData>::TList(const TList& temp)
         node_ = node_->pNext;
         node_temp = node_temp->pNext;
     }
+    pLast = node_;
     pPrevious = nullptr;
     if (pFirst != nullptr) pNext = pFirst->pNext;
     pCurrent = pFirst;
@@ -83,6 +87,7 @@ TList<TKey, TData>::TList(TNode<TKey, TData >* node_)
     if (node_ == nullptr)
     {
         pFirst = nullptr;
+        pLast = nullptr;
         pPrevious = nullptr;
         pNext = nullptr;
         pCurrent = nullptr;
@@ -96,6 +101,7 @@ TList<TKey, TData>::TList(TNode<TKey, TData >* node_)
         node = node->pNext;
         node_temp = node_temp->pNext;
     }
+    pLast = node;
     pPrevious = nullptr;
     if (pFirst != nullptr) pNext = pFirst->pNext;
     pCurrent = pFirst;
@@ -140,13 +146,10 @@ void TList<TKey, TData>::InsertToEnd(TKey key_, const TData* pData_)
         return;
     }
     TNode<TKey, TData>* temp = new TNode<TKey, TData>(key_, pData_);
-    TNode<TKey, TData>* node = pFirst;
-    while (node->pNext != nullptr)
-    {
-        node = node->pNext;
-    }
-    node->pNext = temp;
-    if (pCurrent == node) pNext = temp;
+    
+    pLast->pNext = temp;
+    
+    if (pCurrent == pFirst) pNext = temp;
 }
 
 template <typename TKey, typename TData>
